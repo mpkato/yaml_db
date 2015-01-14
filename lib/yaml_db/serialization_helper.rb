@@ -16,6 +16,12 @@ module YamlDb
         reenable_logger
       end
 
+      def table_dump(filename, table_name)
+        disable_logger
+        @dumper.table_dump(File.new(filename, "w"), table_name)
+        reenable_logger
+      end
+
       def dump_to_dir(dirname)
         Dir.mkdir(dirname)
         tables = @dumper.tables
@@ -151,6 +157,12 @@ module YamlDb
           dump_table(io, table)
           after_table(io, table)
         end
+      end
+
+      def self.table_dump(io, table_name)
+        before_table(io, table_name)
+        dump_table(io, table_name)
+        after_table(io, table_name)
       end
 
       def self.after_table(io, table)

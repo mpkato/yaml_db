@@ -4,6 +4,10 @@ module YamlDb
       SerializationHelper::Base.new(helper).dump(db_dump_data_file(helper.extension))
     end
 
+    def self.data_dump_table_task(table_name, filepath)
+      SerializationHelper::Base.new(helper).table_dump(filepath, table_name)
+    end
+
     def self.data_dump_dir_task
       dir = ENV['dir'] || "#{Time.now.strftime('%F_%T')}"
       SerializationHelper::Base.new(helper).dump_to_dir(dump_dir("/#{dir}"))
@@ -11,6 +15,10 @@ module YamlDb
 
     def self.data_load_task
       SerializationHelper::Base.new(helper).load(db_dump_data_file(helper.extension))
+    end
+
+    def self.data_load_table_task(filepath)
+      SerializationHelper::Base.new(helper).load(filepath)
     end
 
     def self.data_load_dir_task
